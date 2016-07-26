@@ -9,6 +9,7 @@ gem 'sinatra-activerecord'
 gem 'pg'
 
 gem 'annotate'
+gem 'nokogiri'
 
 group :development do
   gem 'tux'

@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_160_726_013_225) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+ActiveRecord::Schema.define(version: 20160726013225) do
 
-  create_table 'episodes', force: :cascade do |t|
-    t.integer 'day'
-    t.integer 'month'
-    t.integer 'year'
-    t.boolean 'bce', default: false
-    t.string  'episode_type'
-    t.text    'text'
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "episodes", force: :cascade do |t|
+    t.integer "day"
+    t.integer "month"
+    t.integer "year"
+    t.boolean "bce",          default: false
+    t.string  "episode_type"
+    t.text    "text"
   end
+
 end

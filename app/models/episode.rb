@@ -15,8 +15,8 @@ class Episode < ActiveRecord::Base
   validates :day, presence: true,
                   inclusion: 1..31
 
-  validates :day, presence: true,
-                  inclusion: 1..12
+  validates :month, presence: true,
+                    inclusion: 1..12
 
   validates :year, presence: true
 
