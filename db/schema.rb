@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726013225) do
+ActiveRecord::Schema.define(version: 20160728170858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160726013225) do
     t.boolean "bce",          default: false
     t.string  "episode_type"
     t.text    "text"
+    t.index ["day", "month"], name: "index_episodes_on_day_and_month", using: :btree
   end
 
 end
