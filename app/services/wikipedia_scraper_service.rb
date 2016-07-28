@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'Nokogiri'
+require 'nokogiri'
 require 'date'
 
 class WikipediaScraperService

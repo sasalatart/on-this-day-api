@@ -1,0 +1,11 @@
+postgres_db:
+  image: postgres:9.5.0
+
+web:
+  build: .
+  command: ruby app.rb
+  ports:
+    - '80:4567'
+    - '443:4567'
+  links:
+    - postgres_db

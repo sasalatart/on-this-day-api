@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require './environments'
-require 'JSON'
+require 'json'
 
 Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
   require file

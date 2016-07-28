@@ -1,7 +1,7 @@
-source 'https://rubygems.org'
-ruby '2.3.0'
+source 'http://rubygems.org'
 
 gem 'sinatra'
+gem 'thin'
 gem 'rake'
 
 gem 'activerecord'
@@ -10,6 +10,7 @@ gem 'pg'
 
 gem 'annotate'
 gem 'nokogiri'
+gem 'json'
 
 group :development do
   gem 'tux'
