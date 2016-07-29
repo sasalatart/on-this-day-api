@@ -15,6 +15,10 @@ before do
   end
 end
 
+after do
+  ActiveRecord::Base.connection.close
+end
+
 get '/episodes' do
   query = { day: params[:day], month: params[:month] }
   query[:episode_type] = params[:type] if params[:type]

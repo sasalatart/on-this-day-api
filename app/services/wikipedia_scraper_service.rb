@@ -15,13 +15,12 @@ class WikipediaScraperService
 
     day = date[:mday]
     month = Date::MONTHNAMES[date[:mon]]
-    url = "https://en.wikipedia.org/wiki/#{month}_#{day}"
-
-    html = Nokogiri::HTML(open(url))
-
     puts "Scraping #{day}/#{month}"
 
     begin
+      url = "https://en.wikipedia.org/wiki/#{month}_#{day}"
+      html = Nokogiri::HTML(open(url))
+
       events_ul = html.css('#Events')[0].parent.next_element
       births_ul = html.css('#Births')[0].parent.next_element
       deaths_ul = html.css('#Deaths')[0].parent.next_element
@@ -29,6 +28,9 @@ class WikipediaScraperService
       { events: parse_ul(events_ul), births: parse_ul(births_ul), deaths: parse_ul(deaths_ul) }
     rescue NoMethodError
       puts 'It seems this month does not have any episodes.'
+      false
+    rescue Net::OpenTimeout
+      puts 'Timeout'
       false
     end
   end
