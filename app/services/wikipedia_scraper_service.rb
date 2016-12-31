@@ -27,7 +27,7 @@ class WikipediaScraperService
 
       { events: parse_ul(events_ul), births: parse_ul(births_ul), deaths: parse_ul(deaths_ul) }
     rescue NoMethodError
-      puts 'It seems this month does not have any episodes.'
+      puts 'It seems this date does not have any episodes, or does not exist.'
       false
     rescue Net::OpenTimeout
       puts 'Timeout'
