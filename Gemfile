@@ -1,17 +1,19 @@
 source 'http://rubygems.org'
 
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'thin'
 gem 'rake'
 
+gem 'pg'
 gem 'activerecord'
 gem 'sinatra-activerecord'
-gem 'pg'
 
-gem 'annotate'
 gem 'nokogiri'
 gem 'json'
 
 group :development do
-  gem 'tux'
+  gem 'annotate'
+  gem 'shotgun'
+  gem 'hirb'
 end

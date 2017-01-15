@@ -1,7 +1,11 @@
+require_relative '../lib/services/wikipedia_scraper_service'
+
 def create_episode(episode, episode_type, day, month)
   bce = episode[:year].include?('BC')
   year = episode[:year].gsub('BC', '').strip.to_i
-  Episode.create(day: day, month: month, year: year, bce: bce, episode_type: episode_type, text: episode[:data])
+
+  Episode.create(day: day, month: month, year: year, bce: bce,
+                 episode_type: episode_type, text: episode[:data])
 end
 
 (1..12).each do |month|
