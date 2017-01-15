@@ -41,29 +41,29 @@ Returns an array of json historical episodes, filtered by day, month and episode
   - **Code:** 200
   - **Example content:**
   ```javascript
-    [
-      {
-        id: 73050,
-        day: 14,
-        month: 7,
-        year: 756,
-        bce: false,
-        episode_type: "event",
-        text: "An Lushan Rebellion: Emperor Xuanzong flees the capital Chang'an as An Lushan's forces advance toward the city."
-      },
-      {
-        id: 73051,
-        day: 14,
-        month: 7,
-        year: 1223,
-        bce: false,
-        episode_type: "event",
-        text: "Louis VIII becomes King of France upon the death of his father, Philip II."
-      },
-      {
-        ...
-      }
-    ]
+    {
+      episodes: [
+        {
+          id: 73050,
+          day: 14,
+          month: 7,
+          year: 756,
+          bce: false,
+          episode_type: "event",
+          text: "An Lushan Rebellion: Emperor Xuanzong flees the capital Chang'an as An Lushan's forces advance toward the city."
+        }, {
+          id: 73051,
+          day: 14,
+          month: 7,
+          year: 1223,
+          bce: false,
+          episode_type: "event",
+          text: "Louis VIII becomes King of France upon the death of his father, Philip II."
+        }, {
+          ...
+        }
+      ]
+    }
   ```
 
 - **Error Response:**
@@ -100,19 +100,14 @@ Returns an array of json historical episodes, filtered by day, month and episode
 ##### Docker
 
 ```sh
-# Build
-$ docker-compose build
+# Run database
+$ docker run -d --name=postgres_db postgres:9.6.1
 
-# Run
-$ docker-compose up -d
+# Run API
+$ docker run -d --name=onthisday -p 80:9292 --link=postgres_db:postgres_db sasalatart/onthisday
 
 # Setup the database
-$ docker-compose run web bundle exec rake db:reset
+$ docker exec onthisday /bin/sh -c 'rake db:reset'
 ```
 
-The server's machine should now be redirecting its port 80 to the container's port 4567.
-
-To stop:
-```sh
-$ docker-compose stop
-```
+The server's machine should now be redirecting its port 80 to the container's port 9292.
