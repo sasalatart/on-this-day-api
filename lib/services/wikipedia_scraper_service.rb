@@ -1,37 +1,59 @@
 require 'open-uri'
 require 'nokogiri'
 require 'date'
+require 'json'
 
-class WikipediaScraperService
-  def self.parse_ul(ul)
-    ul.css('li').map do |li|
-      data_array = li.text.split(' – ')
-      { year: data_array[0], data: data_array[1] }
+def scrap
+  result = {}
+  (1..12).each do |month_index|
+    (1..31).each do |day_index|
+      begin
+        day, month = form_date(day_index, month_index)
+
+        puts "Scraping #{month} #{day}..."
+
+        description, events, births, deaths = extract_from(day, month)
+
+        result["#{month}-#{day}".to_sym] = {
+          description: description, events: events, births: births, deaths: deaths
+        }
+
+      rescue NoMethodError
+        puts 'It seems this date does not have any episodes.'
+      end
     end
   end
 
-  def self.scrap(day, month)
-    date = Date._strptime("#{day}/#{month}", '%d/%m')
+  export_to_file(result)
+end
 
-    day = date[:mday]
-    month = Date::MONTHNAMES[date[:mon]]
-    puts "Scraping #{day}/#{month}"
+def form_date(day_index, month_index)
+  date = Date._strptime("#{day_index}/#{month_index}", '%d/%m')
+  [date[:mday], Date::MONTHNAMES[date[:mon]]]
+end
 
-    begin
-      url = "https://en.wikipedia.org/wiki/#{month}_#{day}"
-      html = Nokogiri::HTML(open(url))
+def extract_from(day, month)
+  html = Nokogiri::HTML open("https://en.wikipedia.org/wiki/#{month}_#{day}")
 
-      events_ul = html.css('#Events')[0].parent.next_element
-      births_ul = html.css('#Births')[0].parent.next_element
-      deaths_ul = html.css('#Deaths')[0].parent.next_element
+  description = html.css('#mw-content-text p')
+                    .map(&:text)
+                    .find { |text| text.include?("#{month} #{day}") }
 
-      { events: parse_ul(events_ul), births: parse_ul(births_ul), deaths: parse_ul(deaths_ul) }
-    rescue NoMethodError
-      puts 'It seems this date does not have any episodes, or does not exist.'
-      false
-    rescue Net::OpenTimeout
-      puts 'Timeout'
-      false
-    end
+  events = parse_ul html.css('#Events')[0].parent.next_element
+  births = parse_ul html.css('#Births')[0].parent.next_element
+  deaths = parse_ul html.css('#Deaths')[0].parent.next_element
+
+  [description, events, births, deaths]
+end
+
+def parse_ul(ul)
+  ul.css('li').map do |li|
+    year, *text = li.text.split(' – ')
+    { year: year, data: text.join(' – ') }
   end
+end
+
+def export_to_file(hash_data)
+  File.write('./db/episodes.json', hash_data.to_json)
+  puts 'Results stored in episodes.json'
 end

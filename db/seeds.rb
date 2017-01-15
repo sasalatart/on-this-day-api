@@ -1,25 +1,36 @@
 require_relative '../lib/services/wikipedia_scraper_service'
 
 def create_episode(episode, episode_type, day, month)
-  bce = episode[:year].include?('BC')
-  year = episode[:year].gsub('BC', '').strip.to_i
-
-  Episode.create(day: day, month: month, year: year, bce: bce,
-                 episode_type: episode_type, text: episode[:data])
+  Episode.create(
+    day: day,
+    month: month,
+    year: episode['year'].gsub('BC', '').strip.to_i,
+    bce: episode['year'].include?('BC'),
+    episode_type: episode_type,
+    text: episode['data']
+  )
 end
 
-(1..12).each do |month|
-  (1..31).each do |day|
-    json = WikipediaScraperService.scrap(day, month)
+unless File.exist?('./db/episodes.json')
+  puts 'episodes.json not found. Beginning to generate it...'
+  scrap
+end
 
-    next unless json
+file = File.read('./db/episodes.json')
+data_hash = JSON.parse(file)
 
-    events = json[:events]
-    births = json[:births]
-    deaths = json[:deaths]
+data_hash.each do |key, value|
+  begin
+    puts "Creating episodes that occurred on #{key.tr('-', ' ')}..."
+    date = Date.strptime(key, '%B-%d')
 
-    events.each { |event| create_episode(event, 'event', day, month) }
-    births.each { |birth| create_episode(birth, 'birth', day, month) }
-    deaths.each { |death| create_episode(death, 'death', day, month) }
+    # value[:description]
+
+    value['events'].each { |event| create_episode(event, 'event', date.day, date.month) }
+    value['births'].each { |birth| create_episode(birth, 'birth', date.day, date.month) }
+    value['deaths'].each { |death| create_episode(death, 'death', date.day, date.month) }
+  rescue ArgumentError
+    puts 'It seems this date does not exist.'
+    next
   end
 end
