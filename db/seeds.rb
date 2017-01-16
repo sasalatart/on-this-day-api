@@ -1,9 +1,8 @@
 require_relative '../lib/services/wikipedia_scraper_service'
 
-def create_episode(episode, episode_type, day, month)
+def create_episode(day_month, episode, episode_type)
   Episode.create(
-    day: day,
-    month: month,
+    day_month_id: day_month.id,
     year: episode['year'].gsub('BC', '').strip.to_i,
     bce: episode['year'].include?('BC'),
     episode_type: episode_type,
@@ -21,14 +20,16 @@ data_hash = JSON.parse(file)
 
 data_hash.each do |key, value|
   begin
-    puts "Creating episodes that occurred on #{key.tr('-', ' ')}..."
+    puts "Adding data recorded for #{key.tr('-', ' ')}..."
     date = Date.strptime(key, '%B-%d')
 
-    # value[:description]
+    day_month = DayMonth.create!(day: date.day,
+                                 month: date.month,
+                                 description: value['description'])
 
-    value['events'].each { |event| create_episode(event, 'event', date.day, date.month) }
-    value['births'].each { |birth| create_episode(birth, 'birth', date.day, date.month) }
-    value['deaths'].each { |death| create_episode(death, 'death', date.day, date.month) }
+    value['events'].each { |event| create_episode(day_month, event, 'event') }
+    value['births'].each { |birth| create_episode(day_month, birth, 'birth') }
+    value['deaths'].each { |death| create_episode(day_month, death, 'death') }
   rescue ArgumentError
     puts 'It seems this date does not exist.'
     next

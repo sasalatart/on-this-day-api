@@ -10,19 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728170858) do
+ActiveRecord::Schema.define(version: 20170115235529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "episodes", force: :cascade do |t|
+  create_table "day_months", force: :cascade do |t|
     t.integer "day"
     t.integer "month"
+    t.text    "description"
+    t.index ["day", "month"], name: "index_day_months_on_day_and_month", using: :btree
+  end
+
+  create_table "episodes", force: :cascade do |t|
     t.integer "year"
     t.boolean "bce",          default: false
     t.string  "episode_type"
     t.text    "text"
-    t.index ["day", "month"], name: "index_episodes_on_day_and_month", using: :btree
+    t.integer "day_month_id"
+    t.index ["day_month_id"], name: "index_episodes_on_day_month_id", using: :btree
   end
 
 end
