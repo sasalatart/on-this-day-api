@@ -7,7 +7,7 @@ require_relative './helpers/helpers'
 
 set :database_file, '../db/database.yml'
 
-get /^\/(events|births|deaths)$/ do
+get %r{^\/(events|births|deaths)$} do
   set_day_month
   json @day_month.to_json_with(params['captures'].first)
 end
