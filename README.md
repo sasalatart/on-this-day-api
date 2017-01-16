@@ -1,5 +1,11 @@
 # On This Day
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](sasalatart/on-this-day)
+[![](https://images.microbadger.com/badges/version/sasalatart/on-this-day.svg)](https://microbadger.com/images/sasalatart/on-this-day)
+[![](https://images.microbadger.com/badges/image/sasalatart/on-this-day.svg)](https://microbadger.com/images/sasalatart/on-this-day)
+[![Code Climate](https://codeclimate.com/github/sasalatart/on-this-day/badges/gpa.svg)](https://codeclimate.com/github/sasalatart/on-this-day)
+
 ## About
 
 *On This Day* is an API built with [Sinatra](https://github.com/sinatra/sinatra) that returns events, births and deaths that occurred in a specific day. This information has been retrieved from Wikipedia by using a scraper.
@@ -8,13 +14,13 @@ Currently available at https://onthisday.salatart.com
 
 ## Usage
 
-### Episodes
+#### Events
 
-Returns an array of json historical episodes, filtered by day, month and episode type (event, birth or death).
+Returns an array of JSON historical events, filtered by day and month.
 
 - **URL:**
 
-  `/episodes?day=<day>&month=<month>&type=<type>`
+  `/events?day=<day>&month=<month>`
 
 - **Method:**
 
@@ -22,15 +28,9 @@ Returns an array of json historical episodes, filtered by day, month and episode
 
 - **URL Params**
 
-  - **Required:**
+  `day=[integer]`, any number between 1 and 31
 
-    `day=[integer]`, any number between 1 and 31
-
-    `month=[integer]`, any number between 1 and 12
-
-  - **Optional:**
-
-    `type=[string]`, can be 'event', 'birth' or 'death'
+  `month=[integer]`, any number between 1 and 12
 
 - **Data Params**
 
@@ -42,23 +42,25 @@ Returns an array of json historical episodes, filtered by day, month and episode
   - **Example content:**
   ```javascript
     {
-      episodes: [
+      id: 359,
+      day: 25,
+      month: 12,
+      description: "December 25 is the 359th day of the year (360th in leap years) in the Gregorian calendar. There are six days remaining until the end of the year. This date is slightly more likely to fall on a Tuesday, Friday or Sunday (58 in 400 years each) than on Wednesday or Thursday (57), and slightly less likely to occur on a Monday or Saturday (56).",
+      events: [
         {
-          id: 73050,
-          day: 14,
-          month: 7,
-          year: 756,
+          id: 122616,
+          year: 2015,
           bce: false,
           episode_type: "event",
-          text: "An Lushan Rebellion: Emperor Xuanzong flees the capital Chang'an as An Lushan's forces advance toward the city."
+          text: "Mohammed Zahran Alloush, commander of Jaysh al-Islam (Army of Islam), one of the Syrian opposition factions, is killed by an airstrike.",
+          day_month_id: 359
         }, {
-          id: 73051,
-          day: 14,
-          month: 7,
-          year: 1223,
+          id: 122615,
+          year: 2012,
           bce: false,
           episode_type: "event",
-          text: "Louis VIII becomes King of France upon the death of his father, Philip II."
+          text: "An Antonov An-72 plane crashes close to the city of Shymkent, killing 27 people.",
+          day_month_id: 359
         }, {
           ...
         }
@@ -78,7 +80,7 @@ Returns an array of json historical episodes, filtered by day, month and episode
 
   ```javascript
   $.ajax({
-    url: "/episodes?day=14&month=7",
+    url: "/events?day=25&month=12",
     dataType: "json",
     type : "GET",
     success : function(response) {
@@ -87,17 +89,21 @@ Returns an array of json historical episodes, filtered by day, month and episode
   });
   ```
 
+#### Births And Deaths
+
+The API is the same for births and deaths, but instead of making a call to `/events`, it should be done to either `/births` or `/deaths`.
+
 ## Setup
 
-##### Development
+#### Development
 
 1. Clone and cd into this repository
 2. Run `bundle install`
 3. Turn on Postgres
 4. Run `bundle exec rake db:reset`
-5. Run `ruby app.rb`
+5. Run `shotgun config.ru`
 
-##### Docker
+#### Docker
 
 ```sh
 # Run database
