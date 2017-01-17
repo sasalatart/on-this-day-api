@@ -8,11 +8,11 @@
 
 ## About
 
-*On This Day* is an API built with [Sinatra](https://github.com/sinatra/sinatra) that returns events, births and deaths that occurred in a specific day. This information has been retrieved from Wikipedia by using a scraper.
+*On This Day* is an application built with [Sinatra](https://github.com/sinatra/sinatra) and [React](https://facebook.github.io/react/) that returns events, births and deaths that occurred in a specific day. This information has been retrieved from Wikipedia by using a scraper.
 
 Currently available at https://onthisday.salatart.com
 
-## Usage
+## API Usage
 
 #### Events
 
@@ -98,18 +98,18 @@ The API is the same for births and deaths, but instead of making a call to `/eve
 #### Development
 
 1. Clone and cd into this repository
-2. Run `bundle install`
-3. Turn on Postgres
-4. Run `bundle exec rake db:reset`
-5. Run `shotgun config.ru`
+2. cd into `client` and run `npm run build && npm start`
+3. cd back into the root dir of this repository
+4. cd into `server` and run `bundle install`
+5. Run `rake db:reset`
+6. Run `shotgun config.ru`
 
 #### Docker
 
 ```sh
-# Run database
+# Pull and run the application and PostgreSQL
 $ docker run -d --name=postgres_db postgres:9.6.1
 
-# Run API
 $ docker run -d --name=onthisday -p 80:9292 --link=postgres_db:postgres_db sasalatart/onthisday
 
 # Setup the database

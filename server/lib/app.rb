@@ -6,8 +6,13 @@ require_relative './models/models'
 require_relative './helpers/helpers'
 
 set :database_file, '../db/database.yml'
+set :public_folder, "#{__dir__}/../../client/build"
 
 get %r{^\/(events|births|deaths)$} do
   set_day_month
   json @day_month.to_json_with(params['captures'].first)
+end
+
+get '/*' do
+  send_file "#{settings.public_folder}/index.html"
 end
