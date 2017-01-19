@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const Button = ({ text, classType="primary", icon, onClick }) => {
   let buttonClassName = "button is-" + classType;
@@ -15,6 +15,13 @@ const Button = ({ text, classType="primary", icon, onClick }) => {
       <span>{ text }</span>
     </button>
   );
+}
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  classType: PropTypes.string,
+  icon: PropTypes.string,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Button;

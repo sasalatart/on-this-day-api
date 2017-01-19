@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const EpisodeRow = ({ bce, year, text }) => {
   if (bce) { year += 'BCE'; }
@@ -9,6 +9,12 @@ const EpisodeRow = ({ bce, year, text }) => {
       <td>{ text }</td>
     </tr>
   );
+}
+
+EpisodeRow.propTypes = {
+  bce: PropTypes.bool.isRequired,
+  year: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default EpisodeRow;

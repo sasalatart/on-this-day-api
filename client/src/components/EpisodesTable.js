@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import EpisodeRow from './EpisodeRow';
 
 const EpisodesTable = ({ episodes }) => {
@@ -15,6 +15,10 @@ const EpisodesTable = ({ episodes }) => {
       </tbody>
   </table>
   );
+}
+
+EpisodesTable.propTypes = {
+  episodes: PropTypes.array.isRequired
 }
 
 export default EpisodesTable;
