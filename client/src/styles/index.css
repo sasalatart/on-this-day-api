@@ -24,3 +24,25 @@ header, footer {
 footer {
   padding: 1em 0;
 }
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.aligner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.nav-item a, a.nav-item, h1.title, h2.title {
+  color: #ffffff;
+}
