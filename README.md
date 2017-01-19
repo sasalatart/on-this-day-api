@@ -113,7 +113,7 @@ $ docker run -d --name=postgres_db postgres:9.6.1
 $ docker run -d --name=onthisday -p 80:9292 --link=postgres_db:postgres_db sasalatart/onthisday
 
 # Setup the database
-$ docker exec onthisday /bin/sh -c 'rake db:reset'
+$ docker exec onthisday rake db:reset
 ```
 
 The server's machine should now be redirecting its port 80 to the container's port 9292.
