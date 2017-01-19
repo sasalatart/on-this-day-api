@@ -48,7 +48,7 @@ footer {
   color: #ffffff;
 }
 
-.nav-item a:hover, a.nav-item:hover {
+.nav-item a:hover, a.nav-item:hover, footer a:hover {
   color: #dd5;
 }
 
