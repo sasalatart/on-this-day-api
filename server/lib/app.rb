@@ -7,6 +7,7 @@ require_relative './helpers/helpers'
 
 set :database_file, '../db/database.yml'
 set :public_folder, "#{__dir__}/../../client/build"
+set :protection, except: [:json_csrf]
 
 get %r{^\/(events|births|deaths)$} do
   set_day_month

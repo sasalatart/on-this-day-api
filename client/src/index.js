@@ -6,6 +6,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import '../node_modules/bulma/css/bulma.css';
 import '../node_modules/react-select/dist/react-select.min.css';
 import './styles/index.css';
+import './styles/rwd-table.css';
 
 ReactDOM.render(
   <Router history={browserHistory} routes={routes} />,

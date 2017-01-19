@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import Select from 'react-select';
 import Button from './shared/Button';
 import { possibleDaysForMonth, possibleMonthsForDay } from '../utils/monthsOfTheYear';
@@ -20,8 +21,7 @@ class Landing extends React.Component {
       possibleDays: possibleDays,
       month: possibleMonths[0],
       day: possibleDays[0],
-      episodeType: this.episodeTypes[0],
-      loading: false
+      episodeType: this.episodeTypes[0]
     }
 
     this.onDayChange = this.onDayChange.bind(this);
@@ -47,8 +47,13 @@ class Landing extends React.Component {
   }
 
   onSubmit() {
-    this.setState({ loading: true })
-    console.log(this.state.month, this.state.day, this.state.episodeType);
+    browserHistory.push({
+      pathname: "/" + this.state.episodeType.value,
+      query: {
+        day: this.state.day.value,
+        month: this.state.month.value
+      }
+    });
   }
 
   render() {
@@ -86,7 +91,6 @@ class Landing extends React.Component {
             <Button
               text="search"
               icon="search"
-              isLoading={this.state.loading}
               onClick={this.onSubmit} />
           </div>
         </div>
