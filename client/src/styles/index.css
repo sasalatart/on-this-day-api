@@ -51,12 +51,3 @@ footer {
 .nav-item a:hover, a.nav-item:hover, footer a:hover {
   color: #dd5;
 }
-
-.table, .table *:hover {
-  background-color: #34495e !important;
-  color: #ffffff !important;
-}
-
-.table thead td, .table thead th {
-  color: #ffffff;
-}
