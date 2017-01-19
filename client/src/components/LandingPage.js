@@ -11,7 +11,7 @@ class Landing extends React.Component {
     this.episodeTypes = [
       { label: 'Events', value: 'events' },
       { label: 'Births', value: 'births' },
-      { label: 'Deaths', value: 'deaths' },
+      { label: 'Deaths', value: 'deaths' }
     ];
 
     const possibleMonths = possibleMonthsForDay(1);
@@ -59,9 +59,9 @@ class Landing extends React.Component {
   render() {
     return (
       <div className="full-height aligner flex-column">
-        <h1 className="title is-1">Search For Historical Episodes</h1>
+        <h1 className="title is-1 has-text-centered">Search For Historical Episodes</h1>
 
-        <h2 className="title">
+        <h2 className="title has-text-centered">
           Data Taken From <a href="http://www.wikipedia.org" target="_blank">Wikipedia</a>
         </h2>
 
