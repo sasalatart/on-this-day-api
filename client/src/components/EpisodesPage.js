@@ -11,7 +11,7 @@ class EpisodesPage extends React.Component {
 
     this.title = this.props.location.pathname.substring(1);
     this.subtitle = months.find(monthInfo => {
-      return monthInfo.value === parseInt(this.props.location.query.month, 36);
+      return monthInfo.value + "" === this.props.location.query.month;
     }).label + " " + this.props.location.query.day;
 
     this.state = { loading: true };
