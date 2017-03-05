@@ -21,7 +21,7 @@ data_hash = JSON.parse(file)
 data_hash.each do |key, value|
   begin
     puts "Adding data recorded for #{key.tr('-', ' ')}..."
-    date = Date.strptime(key, '%B-%d')
+    date = Date.strptime("2016-#{key}", '%Y-%B-%d')
 
     day_month = DayMonth.create!(day: date.day,
                                  month: date.month,
