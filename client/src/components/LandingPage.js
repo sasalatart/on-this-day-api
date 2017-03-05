@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import Select from 'react-select';
-import Button from './shared/Button';
+import SubmitButton from './shared/SubmitButton';
 import { possibleDaysForMonth, possibleMonthsForDay } from '../utils/monthsOfTheYear';
 
 class Landing extends React.Component {
@@ -46,7 +46,9 @@ class Landing extends React.Component {
     this.setState({ episodeType: value || this.episodeTypes[0] })
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
+
     browserHistory.push({
       pathname: "/" + this.state.episodeType.value,
       query: {
@@ -65,7 +67,7 @@ class Landing extends React.Component {
           Data Taken From <a href="http://www.wikipedia.org" target="_blank">Wikipedia</a>
         </h2>
 
-        <div className="full-width columns">
+        <form className="full-width columns">
           <div className="column is-2 is-offset-3">
             <Select
               name="month"
@@ -88,12 +90,12 @@ class Landing extends React.Component {
               onChange={this.onEpisodeTypeChange} />
           </div>
           <div className="column is-1 aligner">
-            <Button
+            <SubmitButton
               text="search"
               icon="search"
               onClick={this.onSubmit} />
           </div>
-        </div>
+        </form>
       </div>
     );
   }

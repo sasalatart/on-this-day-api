@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 
-const Button = ({ text, classType="primary", icon, onClick }) => {
+const SubmitButton = ({ text, classType="primary", icon, onClick }) => {
   let buttonClassName = "button is-" + classType;
 
   return(
     <button
+      type="submit"
       className={buttonClassName}
       onClick={onClick}>
       { icon &&
@@ -17,11 +18,11 @@ const Button = ({ text, classType="primary", icon, onClick }) => {
   );
 }
 
-Button.propTypes = {
+SubmitButton.propTypes = {
   text: PropTypes.string.isRequired,
   classType: PropTypes.string,
   icon: PropTypes.string,
   onClick: PropTypes.func.isRequired
 }
 
-export default Button;
+export default SubmitButton;
