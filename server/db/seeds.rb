@@ -1,4 +1,6 @@
-require_relative '../lib/services/wikipedia_scraper_service'
+require 'on_this_day_scraper'
+
+JSON_DIR = './db/episodes.json'.freeze
 
 def create_episode(day_month, episode, episode_type)
   Episode.create(
@@ -10,12 +12,12 @@ def create_episode(day_month, episode, episode_type)
   )
 end
 
-unless File.exist?('./db/episodes.json')
+unless File.exist?(JSON_DIR)
   puts 'episodes.json not found. Beginning to generate it...'
-  scrap
+  scrap_year(JSON_DIR)
 end
 
-file = File.read('./db/episodes.json')
+file = File.read(JSON_DIR)
 data_hash = JSON.parse(file)
 
 data_hash.each do |key, value|

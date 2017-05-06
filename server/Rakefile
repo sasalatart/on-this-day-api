@@ -1,7 +1,7 @@
 require 'sinatra/activerecord/rake'
+require 'on_this_day_scraper'
 require_relative './lib/app'
-require_relative './lib/services/wikipedia_scraper_service'
 
 task :create_episodes_json do
-  scrap
+  scrap_year('./db/episodes.json')
 end

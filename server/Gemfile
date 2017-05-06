@@ -9,7 +9,7 @@ gem 'pg'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 
-gem 'nokogiri'
+gem 'on_this_day_scraper'
 gem 'json'
 
 group :development do
