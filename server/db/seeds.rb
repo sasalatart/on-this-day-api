@@ -3,13 +3,17 @@ require 'on_this_day_scraper'
 JSON_DIR = './db/episodes.json'.freeze
 
 def create_episode(day_month, episode, episode_type)
-  Episode.create(
+  ar_episode = Episode.create!(
     day_month_id: day_month.id,
     year: episode['year'].gsub('BC', '').strip.to_i,
     bce: episode['year'].include?('BC'),
     episode_type: episode_type,
     text: episode['data']
   )
+
+  episode['kw'].each do |kw|
+    ar_episode.keywords << Keyword.create!(title: kw['title'], href: kw['href'])
+  end
 end
 
 unless File.exist?(JSON_DIR)

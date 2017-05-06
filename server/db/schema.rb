@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115235529) do
+ActiveRecord::Schema.define(version: 20170506202204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20170115235529) do
     t.text    "text"
     t.integer "day_month_id"
     t.index ["day_month_id"], name: "index_episodes_on_day_month_id", using: :btree
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.integer "episode_id"
+    t.string  "title"
+    t.string  "href"
+    t.index ["episode_id"], name: "index_keywords_on_episode_id", using: :btree
   end
 
 end
