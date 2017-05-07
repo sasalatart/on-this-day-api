@@ -25,11 +25,6 @@ class DayMonth < ActiveRecord::Base
     day <= MAX_DAYS_PER_MONTH[month - 1]
   end
 
-  def to_json_with(episode_type)
-    { id: id, day: day, month: month, description: description,
-      :"#{episode_type}" => episodes.where(episode_type: episode_type.singularize) }
-  end
-
   private
 
   def day_month_coherence
