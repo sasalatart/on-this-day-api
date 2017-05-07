@@ -7,7 +7,7 @@ def create_episode(day_month, episode, episode_type)
     day_month_id: day_month.id,
     year: episode['year'].gsub('BC', '').strip.to_i,
     bce: episode['year'].include?('BC'),
-    episode_type: episode_type,
+    episode_type: episode_type.to_sym,
     text: episode['data']
   )
 

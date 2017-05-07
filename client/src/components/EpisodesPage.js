@@ -20,13 +20,8 @@ class EpisodesPage extends React.Component {
   componentWillMount() {
     const url = this.props.location.pathname + this.props.location.search;
     axios.get(url).then(response => {
-      this.setState({
-        day: response.data.day,
-        month: response.data.month,
-        description: response.data.description,
-        episodes: response.data.events || response.data.births || response.data.deaths,
-        loading: false
-      });
+      const { day, month, description, episodes } = response.data.day_month
+      this.setState({ day, month, description, episodes, loading: false });
     }).catch(error => {
       iziToast.error({ title: 'Error retrieving data.' });
     });
