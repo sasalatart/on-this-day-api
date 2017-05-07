@@ -2,15 +2,13 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](sasalatart/on-this-day)
-[![](https://images.microbadger.com/badges/version/sasalatart/on-this-day.svg)](https://microbadger.com/images/sasalatart/on-this-day)
-[![](https://images.microbadger.com/badges/image/sasalatart/on-this-day.svg)](https://microbadger.com/images/sasalatart/on-this-day)
-[![Code Climate](https://codeclimate.com/github/sasalatart/on-this-day/badges/gpa.svg)](https://codeclimate.com/github/sasalatart/on-this-day)
+[![](https://images.microbadger.com/badges/version/sasalatart/on-this-day-sinatra.svg)](https://microbadger.com/images/sasalatart/on-this-day-sinatra)
+[![](https://images.microbadger.com/badges/image/sasalatart/on-this-day-sinatra.svg)](https://microbadger.com/images/sasalatart/on-this-day-sinatra)
+[![Code Climate](https://codeclimate.com/github/sasalatart/on-this-day-sinatra/badges/gpa.svg)](https://codeclimate.com/github/sasalatart/on-this-day-sinatra)
 
 ## About
 
-*On This Day* is an application built with [Sinatra](https://github.com/sinatra/sinatra) and [React](https://facebook.github.io/react/) that returns events, births and deaths that occurred in a specific day. This information has been retrieved from Wikipedia by using a scraper.
-
-Currently available at https://onthisday.salatart.com
+Application built with [Sinatra](https://github.com/sinatra/sinatra) and [React](https://facebook.github.io/react/) that returns events, births and deaths that occurred during a specific day of history. This information has been retrieved from Wikipedia using a scraper.
 
 ## API Usage
 
@@ -18,58 +16,59 @@ Currently available at https://onthisday.salatart.com
 
 Returns an array of JSON historical events, filtered by day and month.
 
-- **URL:**
+- **URL:** `/events?day=<day>&month=<month>`
 
-  `/events?day=<day>&month=<month>`
-
-- **Method:**
-
-  `GET`
+- **Method:** `GET`
 
 - **URL Params**
-
-  `day=[integer]`, any number between 1 and 31
-
-  `month=[integer]`, any number between 1 and 12
-
-- **Data Params**
-
-  None
+  - `day=[integer]`, any number between 1 and 31
+  - `month=[integer]`, any number between 1 and 12
 
 - **Success Response:**
-
   - **Code:** 200
   - **Example content:**
   ```javascript
     {
-      id: 359,
-      day: 25,
-      month: 12,
-      description: "December 25 is the 359th day of the year (360th in leap years) in the Gregorian calendar. There are six days remaining until the end of the year. This date is slightly more likely to fall on a Tuesday, Friday or Sunday (58 in 400 years each) than on Wednesday or Thursday (57), and slightly less likely to occur on a Monday or Saturday (56).",
-      events: [
-        {
-          id: 122616,
-          year: 2015,
-          bce: false,
-          episode_type: "event",
-          text: "Mohammed Zahran Alloush, commander of Jaysh al-Islam (Army of Islam), one of the Syrian opposition factions, is killed by an airstrike.",
-          day_month_id: 359
-        }, {
-          id: 122615,
-          year: 2012,
-          bce: false,
-          episode_type: "event",
-          text: "An Antonov An-72 plane crashes close to the city of Shymkent, killing 27 people.",
-          day_month_id: 359
-        }, {
-          ...
-        }
-      ]
+      day_month: {
+        id: 32,
+        day: 1,
+        month: 2,
+        description: "February 1 is the 32nd day of the year in the Gregorian calendar. There are 333 days remaining until the end of the year (334 in leap years). This date is slightly more likely to fall on a Monday, Wednesday or Friday (58 in 400 years each) than on Saturday or Sunday (57), and slightly less likely to occur on a Tuesday or Thursday (56).",
+        episodes: [
+          {
+            id: 10659,
+            year: 2013,
+            bce: false,
+            episode_type: "event",
+            text: "The Shard, the tallest building in the European Union, is opened to the public.",
+            day_month_id: 32,
+            keywords: [
+              {
+                id: 21624,
+                episode_id: 10659,
+                title: "List of tallest buildings in the European Union",
+                href: "/wiki/List_of_tallest_buildings_in_the_European_Union"
+              }, {
+                id: 21623,
+                episode_id: 10659,
+                title: "The Shard",
+                href: "/wiki/The_Shard"
+              }, {
+                id: 21622,
+                episode_id: 10659,
+                title: "2013",
+                href: "/wiki/2013"
+              }
+            ]
+          }, {
+            ...
+          }
+        ]
+      }
     }
   ```
 
 - **Error Response:**
-
   - **Code:** 400
   - **Content:**
   ```javascript
@@ -77,7 +76,6 @@ Returns an array of JSON historical events, filtered by day and month.
   ```
 
 - **Sample Call:**
-
   ```javascript
   $.ajax({
     url: "/events?day=25&month=12",
@@ -97,20 +95,20 @@ The API is the same for births and deaths, but instead of making a call to `/eve
 
 #### Development
 
-1. Clone and cd into this repository
-2. cd into `client` and run `npm run build && npm start`
-3. cd back into the root dir of this repository
-4. cd into `server` and run `bundle install`
-5. Run `rake db:reset`
-6. Run `shotgun config.ru`
+1. cd into `client` and:
+  - run `npm install`
+  - run `npm start`
+2. open a new shell instance, cd into `server` and:
+  - run `bundle install`
+  - run `rake db:reset`
+  - run `shotgun config.ru`
 
 #### Docker
 
 ```sh
 # Pull and run the application and PostgreSQL
 $ docker run -d --name=postgres_db postgres:9.6.1
-
-$ docker run -d --name=onthisday -p 80:9292 --link=postgres_db:postgres_db sasalatart/onthisday
+$ docker run -d --name=onthisday -p 80:9292 --link=postgres_db:postgres_db sasalatart/on-this-day-sinatra
 
 # Setup the database
 $ docker exec onthisday rake db:reset

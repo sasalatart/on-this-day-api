@@ -1,5 +1,5 @@
 require 'sinatra/activerecord/rake'
-require 'on_this_day_scraper'
+require 'history_scraper'
 require_relative './lib/app'
 
 task :create_episodes_json do

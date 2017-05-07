@@ -1,4 +1,4 @@
-require 'on_this_day_scraper'
+require 'history_scraper'
 
 JSON_DIR = './db/episodes.json'.freeze
 

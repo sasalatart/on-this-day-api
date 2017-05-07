@@ -10,7 +10,7 @@ gem 'pg'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 
-gem 'on_this_day_scraper'
+gem 'history_scraper'
 gem 'json'
 
 group :development do
